@@ -19,3 +19,14 @@
 ;2.1.2
 (defun cria-tabuleiro ()
   (make-array '(18 10) :initial-element nil))
+
+(defun copia-tabuleiro (tabuleiro)
+  (let* ((dimensions (array-dimensions tabuleiro))
+        (novo-tabuleiro (make-array dimensions)))
+  (dotimes (i (array-total-size tabuleiro))
+  	(setf (row-major-aref novo-tabuleiro i)
+          (row-major-aref tabuleiro i)))
+novo-tabuleiro))
+
+(defun tabuleiro-preenchido-p (tabuleiro linha coluna)
+	(aref tabuleiro linha coluna))
