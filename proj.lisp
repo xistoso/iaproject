@@ -16,4 +16,6 @@
 (defun accao-peca (acc)
   (accao-arr acc))
 
-
+;2.1.2
+(defun cria-tabuleiro ()
+  (make-array '(18 10) :initial-element nil))
