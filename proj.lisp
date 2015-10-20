@@ -35,4 +35,8 @@ novo-tabuleiro))
     (let ((altura 0))
       (dotimes (i (array-dimension tabuleiro 0) altura)
 	(cond ((tabuleiro-preenchido-p tabuleiro i coluna) (setf altura i))))))
+
+;equalp compara elemento a elemento
+(defun tabuleiros-iguais-p (tabuleiro-a tabuleiro-b)
+  (equalp tabuleiro-a tabuleiro-b))
       
