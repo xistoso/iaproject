@@ -27,3 +27,6 @@
   	(setf (row-major-aref novo-tabuleiro i)
           (row-major-aref tabuleiro i)))
 novo-tabuleiro))
+
+(defun tabuleiro-preenchido-p (tabuleiro linha coluna)
+	(aref tabuleiro linha coluna))
