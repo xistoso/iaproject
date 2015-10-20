@@ -39,4 +39,10 @@ novo-tabuleiro))
 ;equalp compara elemento a elemento
 (defun tabuleiros-iguais-p (tabuleiro-a tabuleiro-b)
   (equalp tabuleiro-a tabuleiro-b))
-      
+
+;a nossa implementacao se se mantiver e apenas copy
+(defun tabuleiro->array(tabuleiro)
+  (copia-tabuleiro tabuleiro))
+
+(defun array->tabuleiro(array)
+  (copia-tabuleiro array))
