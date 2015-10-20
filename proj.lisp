@@ -30,3 +30,9 @@ novo-tabuleiro))
 
 (defun tabuleiro-preenchido-p (tabuleiro linha coluna)
 	(aref tabuleiro linha coluna))
+
+(defun tabuleiro-altura-coluna (tabuleiro coluna)
+    (let ((altura 0))
+      (dotimes (i (array-dimension tabuleiro 0) altura)
+	(cond ((tabuleiro-preenchido-p tabuleiro i coluna) (setf altura i))))))
+      
