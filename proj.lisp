@@ -3,7 +3,6 @@
 ;; 58551 Goncalo Ribeiro
 
 ;;2.1.1
-
 (defstruct accao (pos NIL)
 	   (arr NIL :type array))
 
