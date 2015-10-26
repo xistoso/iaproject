@@ -6,6 +6,13 @@
 (defvar *coluna-0* 0)
 (defvar *coluna-9* 9)
 
+;; Auxiliar Funcions
+;; Tabuleiro
+
+(defun tabuleiro-anula-linha (tabuleiro linha)
+  (dotimes (coluna-i 10)
+    (setf (aref tabuleiro coluna-1 linha) nil)))
+
 ;;2.1.1
 (defstruct accao (pos NIL)
 	   (arr NIL :type array))
@@ -41,10 +48,8 @@ novo-tabuleiro))
 
 (defun tabuleiro-topo-preenchido-p (tabuleiro)
   (let ((res nil))
-    (dotimes (coluna-i 10)
-      (if  (not (null (aref tabuleiro *coluna-0* coluna-i)))
-        (setf res (or (aref tabuleiro *coluna-0* coluna-i) res))))
-    res))
+    (dotimes (coluna-i 10 res)
+      (cond ((tabuleiro-preenchido-p tabuleiro *coluna-0* coluna-i)(setf res T))))))
 
 ;equalp compara elemento a elemento
 (defun tabuleiros-iguais-p (tabuleiro-a tabuleiro-b)
