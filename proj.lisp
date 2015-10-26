@@ -57,8 +57,13 @@ novo-tabuleiro))
   (dotimes (linha *altura-max*)
     (let (linha-prox (+ linha 1))
       (dotimes (coluna-i 10)
-	(cond ((tabuleiro-preenchido-p tabuleiro coluna-i linha-prox) (tabuleiro-preenche! tabuleiro coluna-i linha))))
+	(cond ((tabuleiro-preenchido-p tabuleiro linha-prox coluna-i) (tabuleiro-preenche! tabuleiro linha coluna-i))))
       (tabuleiro-anula-linha tabuleiro linha-prox))))
+
+(defun tabuleiro-preenche! (tabuleiro linha coluna)
+  (cond ((and (>= linha 0) (>= coluna 0)
+	     (<= linha 17) (<= coluna 9))
+	 (setf (aref tabuleiro linha coluna) T))))
 
 ;equalp compara elemento a elemento
 (defun tabuleiros-iguais-p (tabuleiro-a tabuleiro-b)
