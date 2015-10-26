@@ -21,7 +21,7 @@
 
 (defun copia-tabuleiro (tabuleiro)
   (let* ((dimensions (array-dimensions tabuleiro))
-        (novo-tabuleiro (make-array dimensions)))
+         (novo-tabuleiro (make-array dimensions)))
   (dotimes (i (array-total-size tabuleiro))
   	(setf (row-major-aref novo-tabuleiro i)
           (row-major-aref tabuleiro i)))
@@ -34,6 +34,13 @@ novo-tabuleiro))
     (let ((altura 0))
       (dotimes (i (array-dimension tabuleiro 0) altura)
 	(cond ((tabuleiro-preenchido-p tabuleiro i coluna) (setf altura i))))))
+
+(defun tabuleiro-topo-preenchido-p (tabuleiro)
+  (let ((res nil))
+    (loop for x from 0 to 9 do
+      (if  (not (null (aref tabuleiro 0 x)))
+        (setf res (or (aref tabuleiro 0 x) res))))
+    res))
 
 ;equalp compara elemento a elemento
 (defun tabuleiros-iguais-p (tabuleiro-a tabuleiro-b)
