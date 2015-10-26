@@ -12,7 +12,7 @@
 
 (defun tabuleiro-anula-linha (tabuleiro linha)
   (dotimes (coluna-i 10)
-    (setf (aref tabuleiro coluna-1 linha) nil)))
+    (setf (aref tabuleiro coluna-i linha) nil)))
 
 ;;2.1.1
 (defstruct accao (pos NIL)
@@ -55,7 +55,7 @@ novo-tabuleiro))
 (defun tabuleiro-remove-linha! (tabuleiro linha)
   (tabuleiro-anula-linha tabuleiro linha)
   (dotimes (linha *altura-max*)
-    (let (linha-prox (+ linha 1))
+    (let ((linha-prox (+ linha 1)))
       (dotimes (coluna-i 10)
 	(cond ((tabuleiro-preenchido-p tabuleiro linha-prox coluna-i) (tabuleiro-preenche! tabuleiro linha coluna-i))))
       (tabuleiro-anula-linha tabuleiro linha-prox))))
