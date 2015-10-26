@@ -2,6 +2,10 @@
 ;; 58540 Pedro Dias
 ;; 58551 Goncalo Ribeiro
 
+(defvar *tamanho-tabuleiro* '(18 10))
+(defvar *coluna-0* 0)
+(defvar *coluna-9* 9)
+
 ;;2.1.1
 
 (defstruct accao (pos NIL)
@@ -18,7 +22,7 @@
 
 ;2.1.2
 (defun cria-tabuleiro ()
-  (make-array '(18 10) :initial-element nil))
+  (make-array *tamanho-tabuleiro* :initial-element nil))
 
 (defun copia-tabuleiro (tabuleiro)
   (let* ((dimensions (array-dimensions tabuleiro))
@@ -38,9 +42,9 @@ novo-tabuleiro))
 
 (defun tabuleiro-topo-preenchido-p (tabuleiro)
   (let ((res nil))
-    (loop for x from 0 to 9 do
-      (if  (not (null (aref tabuleiro 0 x)))
-        (setf res (or (aref tabuleiro 0 x) res))))
+    (dotimes (coluna-i 10)
+      (if  (not (null (aref tabuleiro *coluna-0* coluna-i)))
+        (setf res (or (aref tabuleiro *coluna-0* coluna-i) res))))
     res))
 
 ;equalp compara elemento a elemento
@@ -53,3 +57,4 @@ novo-tabuleiro))
 
 (defun array->tabuleiro(array)
   (copia-tabuleiro array))
+
