@@ -5,6 +5,7 @@
 (defvar *tamanho-tabuleiro* '(18 10))
 (defvar *coluna-0* 0)
 (defvar *coluna-9* 9)
+(defvar *altura-max* 17)
 
 ;; Auxiliar Funcions
 ;; Tabuleiro
@@ -49,7 +50,15 @@ novo-tabuleiro))
 (defun tabuleiro-topo-preenchido-p (tabuleiro)
   (let ((res nil))
     (dotimes (coluna-i 10 res)
-      (cond ((tabuleiro-preenchido-p tabuleiro *coluna-0* coluna-i)(setf res T))))))
+      (cond ((tabuleiro-preenchido-p tabuleiro coluna-i *altura-max*)(setf res T))))))
+
+(defun tabuleiro-remove-linha! (tabuleiro linha)
+  (tabuleiro-anula-linha tabuleiro linha)
+  (dotimes (linha *altura-max*)
+    (let (linha-prox (+ linha 1))
+      (dotimes (coluna-i 10)
+	(cond ((tabuleiro-preenchido-p tabuleiro coluna-i linha-prox) (tabuleiro-preenche! tabuleiro coluna-i linha))))
+      (tabuleiro-anula-linha tabuleiro linha-prox))))
 
 ;equalp compara elemento a elemento
 (defun tabuleiros-iguais-p (tabuleiro-a tabuleiro-b)
