@@ -57,6 +57,8 @@
 
 (print tabuleiro)
 
-(setf topo (preenchido-aux tabuleiro 9))
+(concatenate 'string "topo-preenchido-aux-function-test:" (if (preenchido-aux tabuleiro 9 9) "T" "F"))
 
-(print topo)
+(concatenate 'string "linha preenchida:" (if (tabuleiro-linha-completa-p tabuleiro 3) "T" "F"))
+
+(concatenate 'string "linha preenchida:" (if (tabuleiro-linha-completa-p tabuleiro 7) "T" "F"))

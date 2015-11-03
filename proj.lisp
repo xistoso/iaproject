@@ -4,7 +4,7 @@
 
 (defvar *tamanho-tabuleiro* '(18 10))
 (defvar *coluna-0* 0)
-(defvar *coluna-9* 9)
+(defvar *coluna-max* 9)
 (defvar *altura-max* 17)
 
 ;; Auxiliar Funcions
@@ -53,7 +53,10 @@ novo-tabuleiro))
 	       (cond ((tabuleiro-preenchido-p tabuleiro i coluna) (setf altura i))))))
                                              
 (defun tabuleiro-topo-preenchido-p (tabuleiro)
-  (preenchido-aux tabuleiro *coluna-9*))
+  (preenchido-aux tabuleiro *coluna-max*))
+
+(defun tabuleiro-linha-completa-p (tabuleiro linha)
+  (preenchido-aux tabuleiro *coluna-max* linha))
 
 (defun tabuleiro-remove-linha! (tabuleiro linha)
   (tabuleiro-anula-linha tabuleiro linha)
@@ -66,7 +69,7 @@ novo-tabuleiro))
 
 (defun tabuleiro-preenche! (tabuleiro linha coluna)
   (cond ((and (>= linha 0) (>= coluna 0)
-	     (<= linha 17) (<= coluna 9))
+	     (<= linha *altura-max*) (<= coluna *coluna-max*))
 	 (setf (aref tabuleiro linha coluna) T))))
 
 ;equalp compara elemento a elemento
