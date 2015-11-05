@@ -50,7 +50,7 @@ novo-tabuleiro))
 (defun tabuleiro-altura-coluna (tabuleiro coluna)
     (let ((altura 0))
       (dotimes (i (array-dimension tabuleiro 0) altura)
-	       (cond ((tabuleiro-preenchido-p tabuleiro i coluna) (setf altura i))))))
+	       (cond ((tabuleiro-preenchido-p tabuleiro i coluna) (setf altura (+ i 1)))))))
                                              
 (defun tabuleiro-topo-preenchido-p (tabuleiro)
   (preenchido-aux tabuleiro *coluna-max*))
@@ -82,3 +82,13 @@ novo-tabuleiro))
 
 (defun array->tabuleiro(array)
   (copia-tabuleiro array))
+
+;2.1.3
+
+(defstruct estado pontos pecas-por-colocar pecas-colocadas Tabuleiro)
+
+(defun copia-estado (e)
+  (make-estado :pontos (estado-pontos e)
+	       :pecas-por-colocar (estado-pecas-por-colocar e)
+	       :pecas-colocadas (estado-pecas-colocadas e)
+	       :Tabuleiro (estado-Tabuleiro e)))
