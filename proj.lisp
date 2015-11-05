@@ -15,7 +15,7 @@
     (setf (aref tabuleiro linha coluna-i) nil)))
 
 (defun preenchido-aux (tabuleiro coluna-i &optional (linha-i *altura-max*))
-  (if (= coluna-i 0)
+  (if (< coluna-i 0)
       nil
       (or (tabuleiro-preenchido-p tabuleiro linha-i coluna-i) (preenchido-aux tabuleiro (- coluna-i 1) linha-i))))
 
