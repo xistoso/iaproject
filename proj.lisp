@@ -89,6 +89,12 @@ novo-tabuleiro))
 
 (defun copia-estado (e)
   (make-estado :pontos (estado-pontos e)
-	       :pecas-por-colocar (estado-pecas-por-colocar e)
-	       :pecas-colocadas (estado-pecas-colocadas e)
-	       :Tabuleiro (estado-Tabuleiro e)))
+	       :pecas-por-colocar (copy-list (estado-pecas-por-colocar e))
+	       :pecas-colocadas (copy-list (estado-pecas-colocadas e))
+	       :Tabuleiro (copia-tabuleiro (estado-Tabuleiro e))))
+
+(defun estados-iguais-p (e1 e2)
+  (equalp e1 e2))
+
+(defun estado-final-p (e)
+  (or (not (estado-pecas-por-colocar e)) (tabuleiro-topo-preenchido-p (estado-Tabuleiro e))))
