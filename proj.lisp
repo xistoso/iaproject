@@ -25,17 +25,15 @@
 
 
 ;;2.1.1
-(defstruct accao (pos NIL)
-	   (arr NIL :type array))
 
 (defun cria-accao (pos arr)
-  (make-accao :pos pos :arr arr))
+  (cons pos arr))
 
 (defun accao-coluna (acc)
-  (accao-pos acc))
+  (car acc))
 
 (defun accao-peca (acc)
-  (accao-arr acc))
+  (cdr acc))
 
 ;2.1.2
 (defun cria-tabuleiro ()
@@ -123,7 +121,24 @@ novo-tabuleiro))
 	(setq accoeslst (append accoeslst (list (cria-accao i (symbol-value orientacao)))))))
 ))
 
-(defun resultado ())
+(defun resultado (e ac)
+  (let ((estadoresultante (copia-estado e))
+	(found-p nil)
+	(alturafinal nil)
+	(peca (accao-peca ac))
+	(posicao (accao-coluna ac)))
+    (setf (estado-pecas-colocadas estadoresultante) 
+	  (concatenate 'list (list (first (estado-pecas-por-colocar e))) (estado-pecas-colocadas e)))
+    (setf (estado-pecas-por-colocar estadoresultante)
+	  (rest (estado-pecas-por-colocar e)))
+    (dotimes (altura *altura-max* estadoresultante)
+      (dotimes (y (array-dimension peca 0))
+	(dotimes (x (array-dimension peca 1))
+	  (cond ((aref peca 0 x) (cond ((tabuleiro-preenchido-p (estado-Tabuleiro e) (- *altura-max* altura y) (+ posicao x)) (setf found-p T)))))))
+      (setf alturafinal altura)
+      (if found-p (break)))
+))
+      
 
 (defun qualidade (e)
   (- 0 (estado-pontos e)))
