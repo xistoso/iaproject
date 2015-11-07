@@ -7,20 +7,11 @@
 (defvar *coluna-max* 9)
 (defvar *altura-max* 17)
 
-;; Auxiliar Funcions
-;;medo
+(defstruct pontos-pecas i j l s z t o)
 
-(defun get-all-symbols (&optional package)
-  (let ((lst ())
-        (package (find-package package)))
-    (do-all-symbols (s lst)
-      (when (fboundp s)
-        (if package
-            (when (eql (symbol-package s) package)
-              (push s lst))
-            (push s lst))))
-    lst))
+(defconstant pontos-pecas-max (make-pontos-pecas :i 800 :j 500 :l 500 :s 300 :z 300 :t 300 :o 300)) 
 
+;; Auxiliari Functions
 ;; Tabuleiro
 
 (defun tabuleiro-anula-linha (tabuleiro linha)
@@ -31,6 +22,7 @@
   (if (< coluna-i 0)
       nil
       (or (tabuleiro-preenchido-p tabuleiro linha-i coluna-i) (preenchido-aux tabuleiro (- coluna-i 1) linha-i))))
+
 
 ;;2.1.1
 (defstruct accao (pos NIL)
@@ -123,7 +115,7 @@ novo-tabuleiro))
 
 (defun accoes (e)
   (let* ((peca (first (estado-pecas-por-colocar e)))
-	 (combinacoes (apropos-list (concatenate 'string "peca-" (format nil "~a" peca)) 
+	 (combinacoes (apropos-list (format nil "peca-~a" peca) 
 				    'common-lisp-user))
 	 (accoeslst '()))
     (dolist (orientacao combinacoes accoeslst)
@@ -136,4 +128,9 @@ novo-tabuleiro))
 (defun qualidade (e)
   (- 0 (estado-pontos e)))
 
-(defun custo-oportunidade ())
+(defun custo-oportunidade (e)
+  (let ((result 0))
+  (dolist (peca (estado-pecas-colocadas e) (- result (estado-pontos e)))
+    (incf result (funcall (intern(format nil "PONTOS-PECAS-~a" peca)) pontos-pecas-max))
+    )
+))
