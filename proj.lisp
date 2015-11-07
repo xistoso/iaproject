@@ -133,4 +133,7 @@ novo-tabuleiro))
 
 (defun resultado ())
 
+(defun qualidade (e)
+  (- 0 (estado-pontos e)))
+
 (defun custo-oportunidade ())
