@@ -123,8 +123,12 @@ novo-tabuleiro))
 
 (defun accoes (e)
   (let* ((peca (first (estado-pecas-por-colocar e)))
-	 (combinacoes (apropos-list (concatenate 'string "peca-" (format nil "~a" peca)) 'common-lisp-user)))
-    combinacoes
+	 (combinacoes (apropos-list (concatenate 'string "peca-" (format nil "~a" peca)) 
+				    'common-lisp-user))
+	 (accoeslst '()))
+    (dolist (orientacao combinacoes accoeslst)
+      (dotimes (i (- *coluna-max* (array-dimension (symbol-value orientacao) 1)))
+	(setq accoeslst (append accoeslst (list (cria-accao i (symbol-value orientacao)))))))
 ))
 
 (defun resultado ())
