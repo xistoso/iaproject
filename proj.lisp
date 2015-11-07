@@ -8,6 +8,19 @@
 (defvar *altura-max* 17)
 
 ;; Auxiliar Funcions
+;;medo
+
+(defun get-all-symbols (&optional package)
+  (let ((lst ())
+        (package (find-package package)))
+    (do-all-symbols (s lst)
+      (when (fboundp s)
+        (if package
+            (when (eql (symbol-package s) package)
+              (push s lst))
+            (push s lst))))
+    lst))
+
 ;; Tabuleiro
 
 (defun tabuleiro-anula-linha (tabuleiro linha)
@@ -98,3 +111,22 @@ novo-tabuleiro))
 
 (defun estado-final-p (e)
   (or (not (estado-pecas-por-colocar e)) (tabuleiro-topo-preenchido-p (estado-Tabuleiro e))))
+
+;2.1.4
+(defstruct problema estado-inicial solucao accoes resultado custo-caminho)
+
+;2.2.1
+
+(defun solucao (e)
+  (and (not (tabuleiro-topo-preenchido-p (estado-Tabuleiro e))) 
+       (not (estado-pecas-por-colocar e))))
+
+(defun accoes (e)
+  (let* ((peca (first (estado-pecas-por-colocar e)))
+	 (combinacoes (apropos-list (concatenate 'string "peca-" (format nil "~a" peca)) 'common-lisp-user)))
+    combinacoes
+))
+
+(defun resultado ())
+
+(defun custo-oportunidade ())
