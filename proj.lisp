@@ -23,6 +23,12 @@
       nil
       (or (tabuleiro-preenchido-p tabuleiro linha-i coluna-i) (preenchido-aux tabuleiro (- coluna-i 1) linha-i))))
 
+(defun todo-preenchido-aux (tabuleiro coluna-i linha-i)
+  (if (tabuleiro-preenchido-p tabuleiro linha-i coluna-i)
+      (cond ((= coluna-i 0) T)
+	    (T (todo-preenchido-aux tabuleiro (- coluna-i 1) linha-i)))
+      nil))
+
 
 ;;2.1.1
 
@@ -59,7 +65,7 @@ novo-tabuleiro))
   (preenchido-aux tabuleiro *coluna-max*))
 
 (defun tabuleiro-linha-completa-p (tabuleiro linha)
-  (preenchido-aux tabuleiro *coluna-max* linha))
+  (todo-preenchido-aux tabuleiro *coluna-max* linha))
 
 (defun tabuleiro-remove-linha! (tabuleiro linha)
   (tabuleiro-anula-linha tabuleiro linha)
@@ -126,17 +132,30 @@ novo-tabuleiro))
 	(found-p nil)
 	(alturafinal nil)
 	(peca (accao-peca ac))
-	(posicao (accao-coluna ac)))
+	(posicao (accao-coluna ac))
+	(cnt 0))
     (setf (estado-pecas-colocadas estadoresultante) 
 	  (concatenate 'list (list (first (estado-pecas-por-colocar e))) (estado-pecas-colocadas e)))
     (setf (estado-pecas-por-colocar estadoresultante)
 	  (rest (estado-pecas-por-colocar e)))
-    (dotimes (altura *altura-max* estadoresultante)
+    (dotimes (altura (+ *altura-max* 1))
       (dotimes (y (array-dimension peca 0))
+	(cond ((>= *altura-max* (+ (- *altura-max* altura) y))
+	       (dotimes (x (array-dimension peca 1))
+		 (cond ((aref peca y x) (cond ((tabuleiro-preenchido-p (estado-Tabuleiro e) (+ (- *altura-max* altura) y) (+ posicao x)) (setf found-p T)))))
+		 ))))
+	      (setf alturafinal altura)
+	      (if found-p (break)))
+    (dotimes (y (array-dimension peca 0))
 	(dotimes (x (array-dimension peca 1))
-	  (cond ((aref peca 0 x) (cond ((tabuleiro-preenchido-p (estado-Tabuleiro e) (- *altura-max* altura y) (+ posicao x)) (setf found-p T)))))))
-      (setf alturafinal altura)
-      (if found-p (break)))
+	  (cond ((aref peca y x) (tabuleiro-preenche! (estado-Tabuleiro estadoresultante) (+ (- *altura-max* alturafinal) y) (+ posicao x))))))
+    (dotimes (y (array-dimension peca 0))
+      (cond ((tabuleiro-linha-completa-p (estado-Tabuleiro estadoresultante) (+(- *altura-max* alturafinal) y))  (tabuleiro-remove-linha! (estado-Tabuleiro estadoresultante) (+(- *altura-max* alturafinal) y)) (incf cnt))))
+    (cond ((= cnt 1) (incf (estado-pontos estadoresultante) 100))
+	  ((= cnt 2) (incf (estado-pontos estadoresultante) 300))
+	  ((= cnt 3) (incf (estado-pontos estadoresultante) 500))
+	  ((= cnt 4) (incf (estado-pontos estadoresultante) 800)))
+    estadoresultante
 ))
       
 
