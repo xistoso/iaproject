@@ -119,3 +119,17 @@
 
 ;;deve retornar NIL
 (tabuleiro-preenchido-p (estado-tabuleiro estado2) 1 5)
+
+(print "entrega 2")
+
+;; Entrega 2
+;(defstruct problema estado-inicial solucao accoes resultado custo-caminho)
+;teste 0.0.1
+;nao se sabe o que deve retornar
+(print (procura-pp (make-problema
+              :estado-inicial (make-estado :pontos 0 :pecas-por-colocar '(o o o o o o o o o o j) :pecas-colocadas '() :tabuleiro (cria-tabuleiro))
+              :solucao 'solucao
+              :accoes 'accoes
+              :resultado 'resultado
+              :custo-caminho 'qualidade)))
+
