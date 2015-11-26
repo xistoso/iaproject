@@ -127,7 +127,7 @@
 ;teste 0.0.1
 ;nao se sabe o que deve retornar
 (print (procura-pp (make-problema
-              :estado-inicial (make-estado :pontos 0 :pecas-por-colocar '(o o o o o o o o o o j) :pecas-colocadas '() :tabuleiro (cria-tabuleiro))
+              :estado-inicial (make-estado :pontos 0 :pecas-por-colocar '(o o o o o o o i o o j) :pecas-colocadas '() :tabuleiro (cria-tabuleiro))
               :solucao 'solucao
               :accoes 'accoes
               :resultado 'resultado
