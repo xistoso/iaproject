@@ -170,35 +170,26 @@ novo-tabuleiro))
     (incf result (funcall (intern(format nil "PONTOS-PECAS-~a" peca)) pontos-pecas-max))
     )
 ))
-
-
-
-;(defstruct problema estado-inicial solucao accoes resultado custo-caminho)
-
-;; PSEUDOCODIGO PARA DFS
-
-;function DEPTH-SEARCH(problem) returns a solution or failure
-; return RECURSIVE-DLS(MAKE-NODE(problem.INITIAL-STATE), problem)
-       
-;function RECURSIVE-DLS(node, problem ) returns a solution or failure
-;  if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
-;  else
-;    foreach action in problem.ACTIONS(node.STATE) do
-;      child ← CHILD-NODE(problem, node, action)
-;      result ← RECURSIVE-DLS(child, problem)
-;    if result != failure then return result
     
-
-;; IMPLEMENTAÇÃO DFS
     
-;(defun procura-pp (problema)
-;  (recursive-depth-search ((problema-estado-inicial problema) problema)))
+(defun procura-pp (problema)
+  (let ((lista-accoes '() ))
+  (recursive-depth-search (problema-estado-inicial problema) lista-accoes problema)))
 
-;(defun recursive-depth-search (estado-inicial problema)
-;  (if (((problema-solucao problema) estado-inicial) e solucao)
-;      ()logica
-;      recursive-depth-search
-;      recebe lista accoes
-;      gurda a nova accao append
-;      retorna lista accoes
-     
+(defun recursive-depth-search (estado lista-accoes problema)
+  (cond ( (funcall (problema-solucao problema) estado) lista-accoes)
+        ( (funcall (problema-accoes problema) estado) nil)
+        (T (dolist (accao (funcall (problema-accoes problema) estado)) resultado)
+              (setf resultado (recursive-depth-search (resultado estado accao) (append lista-accoes accao) problema))
+              (if (not resultado) (return)))))
+
+
+
+
+(defun procura-A* (problema heuristica)
+  (cons problema heuristica))
+
+(defun procura-best (array lista-pecas)
+  (cons array lista-pecas))
+
+;(load "utils.fas") 
