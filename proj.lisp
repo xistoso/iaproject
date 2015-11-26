@@ -122,6 +122,7 @@ novo-tabuleiro))
 	 (combinacoes (apropos-list (format nil "peca-~a" peca) 
 				    'common-lisp-user))
 	 (accoeslst '()))
+   ;(accoeslst nil))
     (dolist (orientacao combinacoes accoeslst)
       (dotimes (i (+ (- *coluna-max* (array-dimension (symbol-value orientacao) 1)) 2))
 	(setq accoeslst (append accoeslst (list (cria-accao i (symbol-value orientacao)))))))
@@ -177,13 +178,13 @@ novo-tabuleiro))
   (recursive-depth-search (problema-estado-inicial problema) lista-accoes problema)))
 
 (defun recursive-depth-search (estado lista-accoes problema)
+  (let ((resultado nil))
   (cond ( (funcall (problema-solucao problema) estado) lista-accoes)
-        ( (funcall (problema-accoes problema) estado) nil)
-        (T (dolist (accao (funcall (problema-accoes problema) estado)) resultado)
-              (setf resultado (recursive-depth-search (resultado estado accao) (append lista-accoes accao) problema))
-              (if (not resultado) (return)))))
-
-
+        ( (not (funcall (problema-accoes problema) estado)) nil)
+        (T (dolist (x (funcall (problema-accoes problema) estado) resultado)
+             
+              (setf resultado (recursive-depth-search (resultado estado x) (append lista-accoes (list x)) problema))
+              (if (not resultado) (break)))))))
 
 
 (defun procura-A* (problema heuristica)
@@ -192,4 +193,4 @@ novo-tabuleiro))
 (defun procura-best (array lista-pecas)
   (cons array lista-pecas))
 
-;(load "utils.fas") 
+ ;(load "utils.fas") 
