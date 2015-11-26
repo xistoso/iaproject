@@ -183,7 +183,7 @@ novo-tabuleiro))
         ( (not (funcall (problema-accoes problema) estado)) nil)
         (T (dolist (x (funcall (problema-accoes problema) estado) resultado)
              
-              (setf resultado (recursive-depth-search (resultado estado x) (append lista-accoes (list x)) problema))
+              (setf resultado (recursive-depth-search (funcall (problema-resultado problema) estado x) (append lista-accoes (list x)) problema))
               (if (not resultado) (break)))))))
 
 
@@ -193,4 +193,4 @@ novo-tabuleiro))
 (defun procura-best (array lista-pecas)
   (cons array lista-pecas))
 
- ;(load "utils.fas") 
+ (load "utils.fas") 
