@@ -190,10 +190,35 @@ novo-tabuleiro))
              (if result (return result)))))))
 
 
+(defun insert-at (item list index)
+  (concatenate 'list
+    (subseq list 0 (1- index))
+    (list item)
+    (nthcdr (1- index) list)))
+
+(defun insert-sort-heuristic (node list cost heuristic)
+  (let ((displacement 1))
+    (dolist (x list)
+      (incf displacement)
+      (if ( < (+ (funcall cost (car node)) (funcall heuristic (car node)))
+	      (+ (funcall cost (car x)) (funcall heuristic (car x)))
+	      ) (return)
+      ))
+    (insert-at node list displacement)))
+
 (defun procura-A* (problema heuristica)
-  (cons problema heuristica))
+  (let* ((node (cons (problema-estado-inicial problema) '()))
+	(fronteira (list node)))
+    (loop
+      (if (not fronteira) (return nil))
+      (setf node (first fronteira))
+      (setf fronteira (rest fronteira))
+      (if (funcall (problema-solucao problema) (car node)) (return (cdr node)))
+      (dolist (x (funcall (problema-accoes problema) (car node)))
+		 (setf fronteira (insert-sort-heuristic (cons (funcall (problema-resultado problema) (car node) x) (append (cdr node) (list x))) fronteira (problema-custo-caminho problema) heuristica)))
+		 )))
 
 (defun procura-best (array lista-pecas)
   (cons array lista-pecas))
 
-(load "utils.fas") 
+;(load "utils.fas") 
