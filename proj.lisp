@@ -197,4 +197,4 @@ novo-tabuleiro))
 (defun procura-best (array lista-pecas)
   (cons array lista-pecas))
 
-;(load "utils.fas") 
+(load "utils.fas") 
