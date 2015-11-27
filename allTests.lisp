@@ -471,7 +471,7 @@
 (terpri)
 (terpri)
 
-(print "Entrega 2 - Teste 25")
+(print "Entrega 2 - Teste 25 ==== vai dar erro no load TAI-tabuleiro.lisp")
 ;;; Teste 25 E2
 ;;; procura-best num tabuleiro com 4 jogadadas por fazer. Os grupos tem um tempo limitado para conseguir obter pelo menos 500 pontos. 
 ;;; deve retornar IGNORE
@@ -485,7 +485,7 @@
 (terpri)
 (terpri)
 
-(print "Entrega 2 - Teste 26")
+(print "Entrega 2 - Teste 26 ==== vai dar erro no load TAI-tabuleiro.lisp")
 ;;; teste 26 E2, testa abstracao de dados do tipo tabuleiro, na funcoes procura-pp
 (make-package 'teste)
 (in-package teste)
@@ -509,7 +509,7 @@
 (terpri)
 (terpri)
 
-(print "Entrega 2 - Teste 27")
+(print "Entrega 2 - Teste 27 ==== vai dar erro no load TAI-tabuleiro.lisp")
 ;;; teste 27 E2, testa abstracao de dados do tipo tabuleiro, na funcoes procura-A*
 (make-package 'teste)
 (in-package teste)
