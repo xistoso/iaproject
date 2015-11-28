@@ -199,12 +199,14 @@ novo-tabuleiro))
 (defun insert-sort-heuristic (node list cost heuristic)
   (let ((displacement 1))
     (dolist (x list)
-      (incf displacement)
-      (if ( < (+ (funcall cost (car node)) (funcall heuristic (car node)))
+      (if ( <= (+ (funcall cost (car node)) (funcall heuristic (car node)))
 	      (+ (funcall cost (car x)) (funcall heuristic (car x)))
-	      ) (return)
-      ))
-    (insert-at node list displacement)))
+	      ) (return))
+      (incf displacement))
+;redundant if below
+    (if (eq displacement 0)
+	(append (list node) list)
+	(insert-at node list displacement))))
 
 (defun procura-A* (problema heuristica)
   (let* ((node (cons (problema-estado-inicial problema) '()))
@@ -219,6 +221,11 @@ novo-tabuleiro))
 		 )))
 
 (defun procura-best (array lista-pecas)
-  (cons array lista-pecas))
+  (procura-A* (make-problema
+	       :estado-inicial (make-estado :pontos 0 :pecas-por-colocar lista-pecas :pecas-colocadas '() :tabuleiro (array->tabuleiro array))
+	       :solucao #'solucao
+	       :accoes #'accoes
+	       :resultado #'resultado
+	       :custo-caminho #'qualidade) #'custo-oportunidade))
 
-;(load "utils.fas") 
+(load "utils.fas") 
